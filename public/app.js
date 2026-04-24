@@ -21,21 +21,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// --- DATA DUMMY SOAL ---
-const dataSoal = [
-  {
-    id: "s1",
-    pertanyaan: "Berapa hasil dari 5 + (-3)?",
-    opsi: ["A. 1", "B. 2", "C. -2", "D. 8"],
-    kunci: "B",
-  },
-  {
-    id: "s2",
-    pertanyaan: "Jika x + 5 = 12, maka nilai x adalah?",
-    opsi: ["A. 5", "B. 6", "C. 7", "D. 8"],
-    kunci: "C",
-  },
-];
+// --- DATA SOAL KOSONG ---
+let dataSoal = [];
 
 let timerInterval;
 
@@ -113,30 +100,48 @@ function resetTombol() {
   btnMasuk.disabled = false;
 }
 
-function muatSoal() {
+window.muatSoal = async function () {
   const container = document.getElementById("soalContainer");
-  let htmlSoal = "";
+  container.innerHTML = "<p>Mempersiapkan soal ujian...</p>";
 
-  dataSoal.forEach((soal, index) => {
-    htmlSoal += `<div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 15px;">`;
-    htmlSoal += `<p><strong>${index + 1}.</strong> ${soal.pertanyaan}</p>`;
+  try {
+    // 1. Ambil data JSON dari file eksternal
+    const response = await fetch("data-soal.json");
+    if (!response.ok) throw new Error("Gagal mengambil data soal");
+    dataSoal = await response.json();
 
-    // Format opsi teks biasa yang mudah dicopy ke word processor
-    soal.opsi.forEach((opsi) => {
-      const huruf = opsi.charAt(0);
-      htmlSoal += `
-          <div style="margin-bottom: 8px;">
-              <label style="cursor: pointer;">
-                  <input type="radio" name="jawaban_${soal.id}" value="${huruf}">
-                  ${opsi}
-              </label>
-          </div>`;
+    // 2. Bangun struktur HTML dengan Class CSS (bukan inline style)
+    let htmlSoal = "";
+    dataSoal.forEach((soal, index) => {
+      htmlSoal += `<div class="item-soal">`;
+      htmlSoal += `<div class="teks-soal"><strong>${index + 1}.</strong> ${soal.pertanyaan}</div>`;
+      htmlSoal += `<div class="opsi-container">`;
+
+      soal.opsi.forEach((opsi) => {
+        const huruf = opsi.charAt(0);
+        htmlSoal += `
+          <label class="opsi-label">
+            <input type="radio" name="jawaban_${soal.id}" value="${huruf}">
+            <span class="teks-opsi">${opsi}</span>
+          </label>`;
+      });
+
+      htmlSoal += `</div></div>`;
     });
-    htmlSoal += `</div>`;
-  });
 
-  container.innerHTML = htmlSoal;
-}
+    container.innerHTML = htmlSoal;
+
+    // 3. Perintah khusus agar MathJax memproses teks matematika yang baru masuk
+    if (window.MathJax) {
+      MathJax.typesetPromise([container]).catch((err) =>
+        console.log("MathJax error:", err),
+      );
+    }
+  } catch (error) {
+    console.error("Error muat soal:", error);
+    container.innerHTML = "<p>Gagal memuat soal. Silakan refresh halaman.</p>";
+  }
+};
 
 function mulaiTimer(durasiDetik) {
   let waktu = durasiDetik;
@@ -215,10 +220,12 @@ document
 
 window.muatDataAdmin = async function () {
   const tabel = document.getElementById("tabelHasil");
+
+  // Mengembalikan header Nama sesuai dengan index.html
   tabel.innerHTML = `
     <tr>
       <th>NIS</th>
-      <th>Waktu (Jam)</th>
+      <th>Nama</th>
       <th>Benar</th>
       <th>Salah</th>
       <th>Kosong</th>
@@ -226,23 +233,38 @@ window.muatDataAdmin = async function () {
   `;
 
   try {
+    // 1. Ambil data semua user untuk membuat "Kamus Siswa"
+    const usersSnap = await getDocs(collection(db, "users"));
+    const kamusSiswa = {};
+    usersSnap.forEach((docSnap) => {
+      const userData = docSnap.data();
+      kamusSiswa[docSnap.id] = userData.nama || "Tanpa Nama";
+    });
+
+    // 2. Ambil data hasil ujian
     const querySnapshot = await getDocs(collection(db, "hasil_ujian"));
+
+    let barisTabel = "";
+
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
-      const waktuFormat = new Date(data.waktu_pengumpulan).toLocaleTimeString(
-        "id-ID",
-      );
 
-      tabel.innerHTML += `
+      // 3. Cocokkan NIS ujian dengan Nama di kamus
+      const namaSiswa = kamusSiswa[data.nis] || "Tidak Diketahui";
+
+      barisTabel += `
         <tr>
           <td style="text-align: center;">${data.nis}</td>
-          <td style="text-align: center;">${waktuFormat}</td>
+          <td style="text-align: left; padding-left: 15px;">${namaSiswa}</td>
           <td style="text-align: center;">${data.benar}</td>
           <td style="text-align: center;">${data.salah}</td>
           <td style="text-align: center;">${data.kosong}</td>
         </tr>
       `;
     });
+
+    // Masukkan semua baris sekaligus ke dalam tabel
+    tabel.innerHTML += barisTabel;
   } catch (error) {
     console.error("Gagal menarik data admin:", error);
     alert("Gagal memuat rekap nilai siswa.");

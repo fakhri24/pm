@@ -1,0 +1,24 @@
+[
+  {
+    "id": "s1",
+    "pertanyaan": "Tentukan nilai $ x $ yang memenuhi persamaan $ x - 5 = 12 $ !",
+    "opsi": [
+      "A. $ x = 12 - 5 = 7 $",
+      "B. $ x = 12 + 5 = 17 $",
+      "C. $ x = -12 + 5 = -7 $",
+      "D. $ x = -12 - 5 = -17 $"
+    ],
+    "kunci": "B"
+  },
+  {
+    "id": "s2",
+    "pertanyaan": "Berapa hasil dari operasi pecahan berikut: $ \\frac{1}{2} + \\frac{1}{4} $ ?",
+    "opsi": [
+      "A. $ \\frac{1}{6} $",
+      "B. $ \\frac{2}{6} $",
+      "C. $ \\frac{3}{4} $",
+      "D. $ \\frac{2}{4} $"
+    ],
+    "kunci": "C"
+  }
+]

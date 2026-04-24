@@ -219,3 +219,56 @@ th {
 tr:hover {
   background-color: var(--bg-table-head);
 }
+
+/* =========================================
+   STYLE SOAL & OPSI JAWABAN (PLAIN TEXT)
+   ========================================= */
+.item-soal {
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 16px;
+}
+
+.item-soal:last-child {
+  border-bottom: none;
+}
+
+.teks-soal {
+  font-size: 16px;
+  color: var(--text-heading);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* Mengubah kontainer opsi menjadi tumpukan teks murni */
+.opsi-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.opsi-label {
+  display: flex;
+  align-items: flex-start; /* Memastikan radio button di atas jika teks panjang */
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  background-color: var(--bg-body);
+}
+
+.opsi-label:hover {
+  background-color: var(--btn-primary-glow);
+}
+
+.opsi-label input[type="radio"] {
+  margin-top: 4px; /* Menyelaraskan tinggi bulatan radio dengan teks pertama */
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.teks-opsi {
+  font-size: 15px;
+  color: var(--text-main);
+  line-height: 1.6;
+}
