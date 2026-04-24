@@ -1,0 +1,221 @@
+/* Import Font Modern dari Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+/* =========================================
+   SISTEM PALET WARNA (MACRO CONTROL PANEL)
+   ========================================= */
+:root {
+  /* Warna Latar & Teks */
+  --bg-body: #f3f4f6;
+  --bg-card: #ffffff;
+  --text-main: #1f2937;
+  --text-heading: #111827;
+
+  /* Garis Batas & Input */
+  --border-light: #e5e7eb;
+  --border-input: #d1d5db;
+
+  /* Warna Aksi (Biru) */
+  --btn-primary: #3b82f6;
+  --btn-primary-hover: #2563eb;
+  --btn-primary-glow: rgba(59, 130, 246, 0.2);
+
+  /* Warna Sukses (Hijau) */
+  --btn-success: #10b981;
+  --btn-success-hover: #059669;
+
+  /* Warna Bahaya/Peringatan (Merah) */
+  --btn-danger: #ef4444;
+  --btn-danger-hover: #dc2828;
+  --bg-timer: #fee2e2;
+
+  /* Warna Netral (Tabel & Disabled) */
+  --btn-disabled: #9ca3af;
+  --bg-table-head: #f9fafb;
+  --text-table-head: #4b5563;
+}
+
+/* --- PENGATURAN DASAR --- */
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* --- KOMPONEN KARTU (CONTAINER HALAMAN) --- */
+.page {
+  display: none;
+  background-color: var(--bg-card);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 500px;
+  margin-top: 5vh;
+}
+
+#adminPage {
+  max-width: 800px;
+}
+
+.page.active {
+  display: block;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- TIPOGRAFI --- */
+h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-heading);
+  text-align: center;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 15px;
+}
+
+/* --- FORM & INPUT --- */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-input);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--btn-primary);
+  box-shadow: 0 0 0 3px var(--btn-primary-glow);
+}
+
+/* --- TOMBOL UTAMA --- */
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--btn-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+button:hover {
+  background-color: var(--btn-primary-hover);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  background-color: var(--btn-disabled);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- TOMBOL SPESIFIK --- */
+#tombolImport {
+  background-color: var(--btn-success);
+  margin-bottom: 20px;
+}
+
+#tombolImport:hover {
+  background-color: var(--btn-success-hover);
+}
+
+#tombolKeluar {
+  background-color: var(--btn-danger);
+  margin-top: 24px;
+}
+
+#tombolKeluar:hover {
+  background-color: var(--btn-danger-hover);
+}
+
+/* --- ELEMEN UJIAN --- */
+#timer {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--btn-danger);
+  text-align: right;
+  margin-bottom: 20px;
+  background-color: var(--bg-timer);
+  padding: 10px 15px;
+  border-radius: 8px;
+  float: right;
+}
+
+#soalContainer {
+  clear: both;
+  padding-top: 10px;
+}
+
+label {
+  cursor: pointer;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+label:hover {
+  background-color: var(--bg-body);
+}
+
+/* --- TABEL ADMIN --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-light);
+}
+
+th {
+  background-color: var(--bg-table-head);
+  font-weight: 600;
+  color: var(--text-table-head);
+}
+
+tr:hover {
+  background-color: var(--bg-table-head);
+}

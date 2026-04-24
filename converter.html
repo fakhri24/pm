@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSV to JSON Converter - Ujian Mandiri</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      textarea {
+        width: 100%;
+        height: 200px;
+        margin-top: 20px;
+        font-family: monospace;
+        font-size: 12px;
+      }
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+      }
+      .drop-zone {
+        border: 2px dashed #ccc;
+        padding: 30px;
+        text-align: center;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .drop-zone:hover {
+        border-color: #3b82f6;
+        background: #f0f7ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container page active">
+      <h2>CSV to JSON Converter</h2>
+      <p style="font-size: 14px; color: #666; text-align: center">
+        Simpan Excel kamu sebagai <b>CSV (Comma Delimited)</b>, lalu upload di
+        sini.
+      </p>
+
+      <div class="drop-zone" id="dropZone">
+        Klik di sini atau tarik file CSV kamu
+        <input type="file" id="csvFile" accept=".csv" style="display: none" />
+      </div>
+
+      <textarea
+        id="jsonOutput"
+        readonly
+        placeholder="Hasil JSON akan muncul di sini..."
+      ></textarea>
+
+      <button
+        id="btnDownload"
+        style="margin-top: 20px; display: none; background-color: #10b981"
+      >
+        Download data-siswa.json
+      </button>
+    </div>
+
+    <script>
+      const csvFile = document.getElementById("csvFile");
+      const dropZone = document.getElementById("dropZone");
+      const jsonOutput = document.getElementById("jsonOutput");
+      const btnDownload = document.getElementById("btnDownload");
+
+      dropZone.onclick = () => csvFile.click();
+
+      csvFile.onchange = function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const text = e.target.result;
+          const json = csvToJSON(text);
+
+          const jsonString = JSON.stringify(json, null, 2);
+          jsonOutput.value = jsonString;
+          btnDownload.style.display = "block";
+
+          // Menyiapkan tombol download
+          btnDownload.onclick = () => {
+            const blob = new Blob([jsonString], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "data-siswa.json";
+            a.click();
+          };
+        };
+        reader.readAsText(file);
+      };
+
+      function csvToJSON(csv) {
+        const lines = csv.split(/\r?\n/);
+        const result = [];
+        // Mengambil header (baris pertama)
+        const headers = lines[0].split(/[;,]/); // Mendukung pemisah koma atau titik koma
+
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i]) continue;
+          const obj = {};
+          const currentline = lines[i].split(/[;,]/);
+
+          for (let j = 0; j < headers.length; j++) {
+            const key = headers[j].trim().toLowerCase();
+            const value = currentline[j] ? currentline[j].trim() : "";
+            obj[key] = value;
+          }
+          result.push(obj);
+        }
+        return result;
+      }
+    </script>
+  </body>
+</html>
