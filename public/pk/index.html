@@ -2,7 +2,7 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <title>Ujian Mandiri</title>
+    <title>Try Out Penalaran Kuantitatif SNBT</title>
     <link rel="stylesheet" href="style.css" />
 
     <script>
@@ -28,7 +28,7 @@
   </head>
   <body>
     <div id="loginPage" class="page active">
-      <h2>Login Ujian PM</h2>
+      <h2>Login Ujian PK</h2>
       <input type="text" id="nis" placeholder="Username: (Tuliskan NIS kamu)" />
       <input
         type="password"
@@ -49,8 +49,10 @@
           padding-bottom: 15px;
         "
       >
-        <h2 style="margin: 0; border: none; padding: 0">Ujian Mandiri</h2>
-        <div id="timer" style="margin: 0">Sisa Waktu: 30:00</div>
+        <h2 style="margin: 0; border: none; padding: 0">
+          Try Out Penalaran Kuantitatif SNBT
+        </h2>
+        <div id="timer" style="margin: 0">Sisa Waktu: 20:00</div>
       </div>
 
       <div
@@ -88,36 +90,25 @@
 
     <div id="adminPage" class="page">
       <h2>Dashboard Guru - Rekap Nilai</h2>
-      <div style="display: flex; gap: 10px; margin-bottom: 20px">
-        <button id="tombolImport" style="flex: 1; margin-bottom: 0">
+      <div style="display: flex; gap: 10px">
+        <button id="tombolImport" style="flex: 1">
           Import Data Siswa (JSON)
         </button>
-        <!-- Tombol Ekspor Ujian Umum -->
-        <button
-          id="tombolEkspor"
-          style="flex: 1; background-color: #059669; margin-bottom: 0"
-        >
+        <button id="tombolEkspor" style="flex: 1; background-color: #059669">
           Ekspor Skor (CSV)
         </button>
       </div>
-      <table id="tabelHasil">
-        <tr>
-          <th>NIS</th>
-          <th>Nama</th>
-          <th>Benar</th>
-          <th>Salah</th>
-          <th>Kosong</th>
-        </tr>
-      </table>
+      <table id="tabelHasil"></table>
       <button id="tombolKeluar">Keluar</button>
     </div>
 
-    <!-- Tambahkan blok ini tepat di atas <script type="module" src="app.js"></script> -->
     <div id="resultPage" class="page" style="text-align: center">
       <h2>Ujian Berhasil Diselesaikan!</h2>
       <p style="font-size: 18px; margin-bottom: 5px; color: var(--text-main)">
-        Skor Ujian Mandiri Kamu:
+        Skor TO PK Kamu:
       </p>
+
+      <!-- Ini bagian skor besar di tengah -->
       <div
         id="skorAkhir"
         style="
@@ -129,6 +120,7 @@
       >
         0
       </div>
+
       <p
         id="detailStatistik"
         style="color: var(--text-muted); font-size: 16px; margin-bottom: 30px"

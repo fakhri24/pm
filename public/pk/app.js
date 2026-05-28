@@ -24,16 +24,17 @@ const db = getFirestore(app);
 // --- DATA SOAL KOSONG ---
 let dataSoal = [];
 let timerInterval;
-// let currentSoalIndex = 0; // Tambahan untuk melacak posisi soal saat ini
-// let listRagu = {}; // Menyimpan status ragu: { index: true/false }
+// let currentSoalIndex_pk = 0; // Tambahan untuk melacak posisi soal saat ini
+// let listRagu_pk = {}; // Menyimpan status ragu: { index: true/false }
 
 // --- STATE UJIAN (Disinkronkan dengan Local Storage) ---
-let nisSiswa = localStorage.getItem("nisSiswa") || "";
-let jawabanSiswa = JSON.parse(localStorage.getItem("jawabanSiswa")) || {};
-// listRagu sudah kita deklarasikan sebelumnya, kita update menjadi:
-let listRagu = JSON.parse(localStorage.getItem("listRagu")) || {};
-let currentSoalIndex = parseInt(localStorage.getItem("currentSoalIndex")) || 0;
-let sisaWaktu = parseInt(localStorage.getItem("sisaWaktu")) || 1800; // 30 menit
+let nisSiswa_pk = localStorage.getItem("nisSiswa_pk") || "";
+let jawabanSiswa_pk = JSON.parse(localStorage.getItem("jawabanSiswa_pk")) || {};
+// listRagu_pk sudah kita deklarasikan sebelumnya, kita update menjadi:
+let listRagu_pk = JSON.parse(localStorage.getItem("listRagu_pk")) || {};
+let currentSoalIndex_pk =
+  parseInt(localStorage.getItem("currentSoalIndex_pk")) || 0;
+let sisaWaktu_pk = parseInt(localStorage.getItem("sisaWaktu_pk")) || 1200; // 20 menit
 
 // Menangkap elemen tombol
 const btnMasuk = document.getElementById("tombolMasuk");
@@ -65,7 +66,7 @@ btnMasuk.addEventListener("click", async function () {
           if (typeof muatDataAdmin === "function") muatDataAdmin();
         } else {
           // JIKA SISWA: Cek dulu sudah ujian atau belum
-          const cekHasilRef = doc(db, "hasil_ujian", nisInput);
+          const cekHasilRef = doc(db, "hasil_ujian_pk", nisInput);
           const cekHasilSnap = await getDoc(cekHasilRef);
 
           if (cekHasilSnap.exists()) {
@@ -85,12 +86,12 @@ btnMasuk.addEventListener("click", async function () {
 
           document.addEventListener("DOMContentLoaded", () => {
             // Jika ditemukan sesi siswa yang belum dikumpulkan
-            if (nisSiswa && localStorage.getItem("sisaWaktu")) {
+            if (nisSiswa_pk && localStorage.getItem("sisaWaktu_pk")) {
               document.getElementById("loginPage").classList.remove("active");
               document.getElementById("examPage").classList.add("active");
 
               // Tanamkan NIS ke form secara gaib (karena submitUjian butuh value dari sini)
-              document.getElementById("nis").value = nisSiswa;
+              document.getElementById("nis").value = nisSiswa_pk;
 
               if (typeof muatSoal === "function") muatSoal();
               if (typeof mulaiTimer === "function") mulaiTimer(); // Tidak perlu parameter lagi
@@ -98,18 +99,18 @@ btnMasuk.addEventListener("click", async function () {
           });
 
           // JIKA LOLOS SEMUA CEK: Baru pindah halaman
-          nisSiswa = nisInput;
-          localStorage.setItem("nisSiswa", nisSiswa);
+          nisSiswa_pk = nisInput;
+          localStorage.setItem("nisSiswa_pk", nisSiswa_pk);
 
           // Inisialisasi awal memori jika kosong
-          if (!localStorage.getItem("jawabanSiswa"))
-            localStorage.setItem("jawabanSiswa", JSON.stringify({}));
-          if (!localStorage.getItem("listRagu"))
-            localStorage.setItem("listRagu", JSON.stringify({}));
-          if (!localStorage.getItem("sisaWaktu"))
-            localStorage.setItem("sisaWaktu", 1800);
-          if (!localStorage.getItem("currentSoalIndex"))
-            localStorage.setItem("currentSoalIndex", 0);
+          if (!localStorage.getItem("jawabanSiswa_pk"))
+            localStorage.setItem("jawabanSiswa_pk", JSON.stringify({}));
+          if (!localStorage.getItem("listRagu_pk"))
+            localStorage.setItem("listRagu_pk", JSON.stringify({}));
+          if (!localStorage.getItem("sisaWaktu_pk"))
+            localStorage.setItem("sisaWaktu_pk", 1200);
+          if (!localStorage.getItem("currentSoalIndex_pk"))
+            localStorage.setItem("currentSoalIndex_pk", 0);
 
           document.getElementById("loginPage").classList.remove("active");
           document.getElementById("examPage").classList.add("active");
@@ -153,16 +154,24 @@ window.muatSoal = async function () {
 
     dataSoal.forEach((soal, index) => {
       // GANTI MENJADI INI:
-      const displayStatus = index === currentSoalIndex ? "block" : "none";
+      const displayStatus = index === currentSoalIndex_pk ? "block" : "none";
       htmlSoal += `<div class="item-soal" id="soal_${index}" style="display: ${displayStatus}; border-bottom: none;">`;
       htmlSoal += `<div class="teks-soal"><strong>${index + 1}.</strong> ${soal.pertanyaan}</div>`;
+      // --- MODIFIKASI: PENGECEKAN DAN RENDER GAMBAR SVG ---
+      if (soal.gambar) {
+        // Kita bungkus dengan div tambahan untuk memberi jarak (margin) dengan opsi jawaban
+        htmlSoal += `<div class="gambar-soal" style="margin-bottom: 20px; text-align: center;">
+                       ${soal.gambar}
+                     </div>`;
+      }
+      // ----------------------------------------------------
       htmlSoal += `<div class="opsi-container">`;
 
       // --- DI DALAM muatSoal(), GANTI BAGIAN LOOPING OPSI MENJADI INI: ---
       soal.opsi.forEach((opsi) => {
         const huruf = opsi.charAt(0);
         // Cek apakah di memori opsi ini sebelumnya dipilih
-        const isChecked = jawabanSiswa[soal.id] === huruf ? "checked" : "";
+        const isChecked = jawabanSiswa_pk[soal.id] === huruf ? "checked" : "";
 
         htmlSoal += `
           <label class="opsi-label">
@@ -180,13 +189,16 @@ window.muatSoal = async function () {
     radioButtons.forEach((radio) => {
       radio.addEventListener("change", (e) => {
         // 1. Matikan status ragu secara otomatis & simpan
-        listRagu[currentSoalIndex] = false;
-        localStorage.setItem("listRagu", JSON.stringify(listRagu));
+        listRagu_pk[currentSoalIndex_pk] = false;
+        localStorage.setItem("listRagu_pk", JSON.stringify(listRagu_pk));
 
         // 2. Simpan jawaban ke State & Local Storage
         const idSoal = e.target.name.replace("jawaban_", "");
-        jawabanSiswa[idSoal] = e.target.value;
-        localStorage.setItem("jawabanSiswa", JSON.stringify(jawabanSiswa));
+        jawabanSiswa_pk[idSoal] = e.target.value;
+        localStorage.setItem(
+          "jawabanSiswa_pk",
+          JSON.stringify(jawabanSiswa_pk),
+        );
 
         updateTombolNavigasi();
         cekSemuaTerjawab(e);
@@ -224,20 +236,20 @@ window.muatSoal = async function () {
 function mulaiTimer() {
   const display = document.getElementById("timer");
 
-  // Pastikan kita menggunakan sisaWaktu dari variabel global
+  // Pastikan kita menggunakan sisaWaktu_pk dari variabel global
   timerInterval = setInterval(function () {
-    let menit = parseInt(sisaWaktu / 60, 10);
-    let detik = parseInt(sisaWaktu % 60, 10);
+    let menit = parseInt(sisaWaktu_pk / 60, 10);
+    let detik = parseInt(sisaWaktu_pk % 60, 10);
 
     menit = menit < 10 ? "0" + menit : menit;
     detik = detik < 10 ? "0" + detik : detik;
 
     display.textContent = "Sisa Waktu: " + menit + ":" + detik;
 
-    sisaWaktu--; // Kurangi waktu
-    localStorage.setItem("sisaWaktu", sisaWaktu); // Update ke memori
+    sisaWaktu_pk--; // Kurangi waktu
+    localStorage.setItem("sisaWaktu_pk", sisaWaktu_pk); // Update ke memori
 
-    if (sisaWaktu < 0) {
+    if (sisaWaktu_pk < 0) {
       clearInterval(timerInterval);
       alert("Waktu habis! Jawaban akan dikumpulkan otomatis.");
       window.submitUjian();
@@ -259,6 +271,7 @@ window.submitUjian = async function () {
     const jawabanDipilih = document.querySelector(
       `input[name="jawaban_${soal.id}"]:checked`,
     );
+
     if (jawabanDipilih) {
       if (jawabanDipilih.value === soal.kunci) {
         benar++;
@@ -270,39 +283,38 @@ window.submitUjian = async function () {
     }
   });
 
-  const nisSiswa = document.getElementById("nis").value;
+  const nisSiswa_pk = document.getElementById("nis").value;
 
-  // --- FITUR BARU: Hitung Skor (Benar / Total Soal) * 1000 ---
-  const skorUjian = Math.round((benar / dataSoal.length) * 1000);
+  // Hitung Skor TO: (Jumlah Benar / Total Soal) * 1000
+  // Menggunakan Math.round agar tidak ada angka desimal yang terlalu panjang
+  const skorTO = Math.round((benar / dataSoal.length) * 1000);
 
   const paketHasil = {
-    nis: nisSiswa,
+    nis: nisSiswa_pk,
     benar: benar,
     salah: salah,
     kosong: kosong,
-    skor: skorUjian, // Simpan skor ke database Firebase
+    skor: skorTO, // Sekalian kita simpan skornya ke database Firebase bro!
     waktu_pengumpulan: new Date().toISOString(),
   };
 
   try {
-    // Menyimpan ke koleksi "hasil_ujian" sesuai struktur Ujian Mandiri
-    const hasilRef = doc(db, "hasil_ujian", nisSiswa);
+    const hasilRef = doc(db, "hasil_ujian_pk", nisSiswa_pk);
     await setDoc(hasilRef, paketHasil);
 
     // HAPUS SEMUA JEJAK LOCAL STORAGE
-    localStorage.removeItem("nisSiswa");
-    localStorage.removeItem("jawabanSiswa");
-    localStorage.removeItem("listRagu");
-    localStorage.removeItem("currentSoalIndex");
-    localStorage.removeItem("sisaWaktu");
+    localStorage.removeItem("nisSiswa_pk");
+    localStorage.removeItem("jawabanSiswa_pk");
+    localStorage.removeItem("listRagu_pk");
+    localStorage.removeItem("currentSoalIndex_pk");
+    localStorage.removeItem("sisaWaktu_pk");
 
-    // --- TRANSISI KE HALAMAN HASIL ---
-    // Masukkan data ke UI halaman hasil
-    document.getElementById("skorAkhir").textContent = skorUjian;
+    // Masukkan data ke halaman hasil
+    document.getElementById("skorAkhir").textContent = skorTO;
     document.getElementById("detailStatistik").innerHTML =
       `Benar: <b>${benar}</b> &nbsp;|&nbsp; Salah: <b>${salah}</b> &nbsp;|&nbsp; Kosong: <b>${kosong}</b>`;
 
-    // Sembunyikan halaman ujian, tampilkan halaman hasil
+    // Pindah dari halaman ujian ke halaman hasil
     document.getElementById("examPage").classList.remove("active");
     document.getElementById("resultPage").classList.add("active");
 
@@ -322,23 +334,27 @@ window.submitUjian = async function () {
 
 // --- FUNGSI NAVIGASI SOAL ---
 document.getElementById("btnSebelumnya").addEventListener("click", () => {
-  if (currentSoalIndex > 0) {
+  if (currentSoalIndex_pk > 0) {
     // Sembunyikan soal saat ini
-    document.getElementById(`soal_${currentSoalIndex}`).style.display = "none";
-    currentSoalIndex--;
+    document.getElementById(`soal_${currentSoalIndex_pk}`).style.display =
+      "none";
+    currentSoalIndex_pk--;
     // Tampilkan soal sebelumnya
-    document.getElementById(`soal_${currentSoalIndex}`).style.display = "block";
+    document.getElementById(`soal_${currentSoalIndex_pk}`).style.display =
+      "block";
     updateTombolNavigasi();
   }
 });
 
 document.getElementById("btnSelanjutnya").addEventListener("click", () => {
-  if (currentSoalIndex < dataSoal.length - 1) {
+  if (currentSoalIndex_pk < dataSoal.length - 1) {
     // Sembunyikan soal saat ini
-    document.getElementById(`soal_${currentSoalIndex}`).style.display = "none";
-    currentSoalIndex++;
+    document.getElementById(`soal_${currentSoalIndex_pk}`).style.display =
+      "none";
+    currentSoalIndex_pk++;
     // Tampilkan soal selanjutnya
-    document.getElementById(`soal_${currentSoalIndex}`).style.display = "block";
+    document.getElementById(`soal_${currentSoalIndex_pk}`).style.display =
+      "block";
     updateTombolNavigasi();
   }
 });
@@ -348,7 +364,7 @@ function updateTombolNavigasi() {
   const btnSelanjutnya = document.getElementById("btnSelanjutnya");
 
   // Jika berada di soal pertama, matikan tombol "Sebelumnya"
-  if (currentSoalIndex === 0) {
+  if (currentSoalIndex_pk === 0) {
     btnSebelumnnya.disabled = true;
     btnSebelumnnya.style.backgroundColor = "var(--btn-disabled)";
   } else {
@@ -357,7 +373,7 @@ function updateTombolNavigasi() {
   }
 
   // Jika berada di soal terakhir, matikan tombol "Selanjutnya"
-  if (currentSoalIndex === dataSoal.length - 1) {
+  if (currentSoalIndex_pk === dataSoal.length - 1) {
     btnSelanjutnya.disabled = true;
     btnSelanjutnya.style.backgroundColor = "var(--btn-disabled)";
   } else {
@@ -366,7 +382,7 @@ function updateTombolNavigasi() {
   }
 
   // TAMBAHAN: Logika tampilan tombol Ragu
-  if (listRagu[currentSoalIndex]) {
+  if (listRagu_pk[currentSoalIndex_pk]) {
     // Jika sedang ragu
     btnRagu.textContent = "Batal Ragu";
     btnRagu.style.backgroundColor = "transparent";
@@ -401,21 +417,22 @@ function renderNavigasi() {
 }
 
 function lompatKeSoal(indexBaru) {
-  document.getElementById(`soal_${currentSoalIndex}`).style.display = "none";
-  currentSoalIndex = indexBaru;
+  document.getElementById(`soal_${currentSoalIndex_pk}`).style.display = "none";
+  currentSoalIndex_pk = indexBaru;
 
   // Simpan posisi halaman saat ini ke memori
-  localStorage.setItem("currentSoalIndex", currentSoalIndex);
+  localStorage.setItem("currentSoalIndex_pk", currentSoalIndex_pk);
 
-  document.getElementById(`soal_${currentSoalIndex}`).style.display = "block";
+  document.getElementById(`soal_${currentSoalIndex_pk}`).style.display =
+    "block";
   updateTombolNavigasi();
   updateHighlightNavigasi();
 }
 
 // Tambahan untuk menyimpan memori saat klik Ragu
 document.getElementById("btnRagu").addEventListener("click", function () {
-  listRagu[currentSoalIndex] = !listRagu[currentSoalIndex];
-  localStorage.setItem("listRagu", JSON.stringify(listRagu)); // Simpan ke storage
+  listRagu_pk[currentSoalIndex_pk] = !listRagu_pk[currentSoalIndex_pk];
+  localStorage.setItem("listRagu_pk", JSON.stringify(listRagu_pk)); // Simpan ke storage
   updateHighlightNavigasi();
   cekSemuaTerjawab();
 
@@ -427,7 +444,7 @@ function updateHighlightNavigasi() {
   // Hapus semua class 'aktif', lalu pasang di index saat ini
   document.querySelectorAll(".btn-nav-nomor").forEach((b, i) => {
     b.classList.remove("aktif");
-    if (i === currentSoalIndex) b.classList.add("aktif");
+    if (i === currentSoalIndex_pk) b.classList.add("aktif");
   });
 }
 
@@ -450,7 +467,7 @@ function cekSemuaTerjawab() {
       }
 
       // Jika ditandai ragu, warna kuning akan menimpa (override)
-      if (listRagu[index]) {
+      if (listRagu_pk[index]) {
         btnNav.classList.add("ragu");
       }
     }
@@ -497,7 +514,7 @@ window.muatDataAdmin = async function () {
     });
 
     // 2. Ambil data hasil ujian
-    const querySnapshot = await getDocs(collection(db, "hasil_ujian"));
+    const querySnapshot = await getDocs(collection(db, "hasil_ujian_pk"));
 
     let barisTabel = "";
 
@@ -585,7 +602,7 @@ document.getElementById("tombolKeluar").addEventListener("click", function () {
   window.location.reload();
 });
 
-// --- FITUR EKSPOR CSV (UJIAN UMUM) ---
+// --- FITUR EKSPOR CSV ---
 document.getElementById("tombolEkspor").addEventListener("click", function () {
   const tabel = document.getElementById("tabelHasil");
   const baris = tabel.querySelectorAll("tr");
@@ -597,22 +614,21 @@ document.getElementById("tombolEkspor").addEventListener("click", function () {
     const dataBaris = [];
 
     kolom.forEach((col) => {
-      // Bersihkan teks dan bungkus dengan kutip
+      // Bersihkan teks dan bungkus dengan kutip untuk menangani koma di dalam teks
       dataBaris.push(`"${col.innerText.trim()}"`);
     });
 
     kontenCsv += dataBaris.join(",") + "\n";
   });
 
-  // Membuat file Blob
+  // Membuat file Blob (Binary Large Object)
   const blob = new Blob([kontenCsv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
 
   // Membuat link unduhan gaib
   const link = document.createElement("a");
   link.setAttribute("href", url);
-  // Nama file dibedakan untuk ujian umum
-  link.setAttribute("download", "rekap_nilai_ujian_umum.csv");
+  link.setAttribute("download", "rekap_nilai_pk_siswa.csv");
   link.style.visibility = "hidden";
 
   document.body.appendChild(link);

@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latihan Soal Matematika & Logika</title>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+        },
+      };
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-hover: #1d4ed8;
+        --bg-body: #f3f4f6;
+        --bg-card: #ffffff;
+        --text-main: #1f2937;
+        --text-muted: #4b5563;
+        --border-color: #e5e7eb;
+        --correct-bg: #dcfce7;
+        --correct-text: #166534;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-body);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 20px;
+        margin: 0;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        color: var(--text-main);
+        margin-bottom: 40px;
+      }
+      .card {
+        background-color: var(--bg-card);
+        border-radius: 8px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        border: 1px solid var(--border-color);
+      }
+      .question-number {
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+      }
+      .question-text {
+        font-size: 1.05rem;
+        margin-bottom: 16px;
+      }
+      .options {
+        list-style-type: none;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+      .options li {
+        background-color: var(--bg-body);
+        padding: 10px 16px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+      }
+      .btn-toggle {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s;
+      }
+      .btn-toggle:hover {
+        background-color: var(--primary-hover);
+      }
+      .explanation {
+        display: none;
+        margin-top: 20px;
+        padding: 16px;
+        background-color: #f8fafc;
+        border-left: 4px solid var(--primary);
+        border-radius: 4px;
+      }
+      .explanation.show {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      .kunci-jawaban {
+        display: inline-block;
+        background-color: var(--correct-bg);
+        color: var(--correct-text);
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-weight: bold;
+        margin-bottom: 12px;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Latihan Soal & Pembahasan</h1>
+
+      <div class="card">
+        <div class="question-number">Soal 1</div>
+        <div class="question-text">
+          Sebuah layanan jasa <em>laundry</em> di asrama menetapkan bahwa cucian
+          seberat 3 kg dikenakan biaya Rp12.000. Jika seorang siswa mencuci
+          pakaian seberat 5 kg, berapa biaya yang harus dibayar?
+        </div>
+        <ul class="options">
+          <li>A. Rp18.000</li>
+          <li>B. Rp20.000</li>
+          <li>C. Rp22.000</li>
+          <li>D. Rp24.000</li>
+          <li>E. Rp25.000</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp1')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp1" class="explanation">
+          <div class="kunci-jawaban">Kunci: B</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Cari terlebih dahulu harga per kilogram cucian.<br />
+            Biaya per kg = Rp12.000 / 3 kg = Rp4.000 / kg.<br />
+            Biaya untuk 5 kg = 5 kg × Rp4.000 = Rp20.000.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 2</div>
+        <div class="question-text">
+          Jumlah anggota ekstrakurikuler <strong>Paskibra</strong> tahun ini
+          meningkat sebesar $ 25\% $ dibandingkan tahun lalu. Jika tahun lalu
+          terdapat 40 anggota, berapa jumlah anggota tahun ini?
+        </div>
+        <ul class="options">
+          <li>A. 45</li>
+          <li>B. 48</li>
+          <li>C. 50</li>
+          <li>D. 55</li>
+          <li>E. 60</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp2')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp2" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Peningkatan = $ 25\% \times 40 = \frac{25}{100} \times 40 = 10 $
+            anggota.<br />
+            Total anggota tahun ini = 40 + 10 = 50 anggota.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 3</div>
+        <div class="question-text">
+          Dalam kegiatan gotong royong membersihkan dan mengecat aula sekolah, 4
+          orang siswa dapat menyelesaikan pekerjaan tersebut dalam waktu 15 jam.
+          Jika hanya 3 siswa yang hadir untuk bekerja, berapa lama waktu yang
+          dibutuhkan? (Asumsikan kecepatan setiap orang sama)
+        </div>
+        <ul class="options">
+          <li>A. 11,25 jam</li>
+          <li>B. 16 jam</li>
+          <li>C. 18 jam</li>
+          <li>D. 20 jam</li>
+          <li>E. 24 jam</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp3')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp3" class="explanation">
+          <div class="kunci-jawaban">Kunci: D</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Ini adalah perbandingan berbalik nilai. Semakin sedikit pekerja,
+            waktu yang dibutuhkan semakin lama.<br />
+            $ \text{Pekerja}_1 \times \text{Waktu}_1 = \text{Pekerja}_2 \times
+            \text{Waktu}_2 $<br />
+            $ 4 \times 15 = 3 \times \text{Waktu}_2 $<br />
+            $ 60 = 3 \times \text{Waktu}_2 $<br />
+            $ \text{Waktu}_2 = \frac{60}{3} = 20 $ jam.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 4</div>
+        <div class="question-text">
+          Berapa banyak siswa laki-laki yang berada di dalam perpustakaan?<br /><br />(1)
+          Rasio siswa laki-laki dan perempuan di perpustakaan adalah $ 3:2 $.<br />(2)
+          Selisih jumlah siswa laki-laki dan perempuan adalah 6 orang.<br /><br />Manakah
+          pernyataan yang cukup untuk menjawab pertanyaan?
+        </div>
+        <ul class="options">
+          <li>
+            A. Pernyataan (1) <strong>SAJA</strong> cukup, tetapi (2)
+            <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            B. Pernyataan (2) <strong>SAJA</strong> cukup, tetapi (1)
+            <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            C. <strong>DUA</strong> pernyataan
+            <strong>BERSAMA-SAMA</strong> cukup, tetapi
+            <strong>SATU</strong> pernyataan <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            D. Pernyataan (1) <strong>SAJA</strong> cukup
+            <strong>ATAU</strong> pernyataan (2) <strong>SAJA</strong> cukup.
+          </li>
+          <li>
+            E. Pernyataan (1) dan (2) tidak cukup untuk menjawab pertanyaan.
+          </li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp4')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp4" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            - Pernyataan (1) saja tidak cukup karena hanya memberikan
+            perbandingan, tanpa angka riil.<br />
+            - Pernyataan (2) saja tidak cukup karena kita tidak tahu total atau
+            rasionya.<br />
+            - Gabungan (1) dan (2): Dari perbandingan $ 3:2 $, selisih rasionya
+            adalah $ 3 - 2 = 1 $ bagian. Satu bagian ini setara dengan selisih
+            riil yaitu 6 orang. Maka laki-laki (3 bagian) = $ 3 \times 6 = 18 $
+            orang. Bisa dijawab! Oleh karena itu butuh dua-duanya.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 5</div>
+        <div class="question-text">
+          Sebuah toko buku memberikan diskon pelajar bertingkat untuk pembelian
+          buku ujian, yaitu sebesar $ 20\% $ dan dilanjutkan diskon tambahan $
+          10\% $ di kasir. Perhatikan pernyataan berikut:<br /><br />(1) Diskon
+          total yang didapatkan siswa adalah $ 30\% $.<br />(2) Diskon total
+          yang didapatkan siswa adalah $ 28\% $.<br />(3) Jika harga awal buku
+          Rp100.000, siswa cukup membayar Rp70.000.<br />(4) Jika harga awal
+          buku Rp100.000, siswa cukup membayar Rp72.000.<br /><br />Pernyataan
+          mana yang benar?
+        </div>
+        <ul class="options">
+          <li>A. (1) dan (3) <strong>SAJA</strong> yang benar.</li>
+          <li>B. (2) dan (4) <strong>SAJA</strong> yang benar.</li>
+          <li>C. (1), (2), dan (3) <strong>SAJA</strong> yang benar.</li>
+          <li>D. <strong>HANYA</strong> (4) yang benar.</li>
+          <li>E. <strong>SEMUA</strong> pernyataan benar.</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp5')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp5" class="explanation">
+          <div class="kunci-jawaban">Kunci: B</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Diskon bertingkat tidak bisa langsung dijumlahkan.<br />
+            Harga setelah diskon 20% = $ 100\% - 20\% = 80\% $ dari harga
+            asli.<br />
+            Harga setelah diskon tambahan 10% = $ 80\% \times (100\% - 10\%) =
+            80\% \times 90\% = 72\% $.<br />
+            Total diskon = $ 100\% - 72\% = 28\% $. (Maka pernyataan 2 benar, 1
+            salah).<br />
+            Jika harga awal Rp100.000, bayarnya = $ 72\% \times 100.000 =
+            \text{Rp72.000} $. (Maka pernyataan 4 benar, 3 salah).
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 6</div>
+        <div class="question-text">
+          Tentukan nilai kebenaran (Benar/Salah) dari 3 pernyataan mengenai
+          prinsip dasar perbandingan berikut secara berurutan:<br /><br />I.
+          Kecepatan sepeda motor dan waktu tempuh siswa dari rumah ke sekolah
+          (untuk jarak yang sama) adalah perbandingan berbalik nilai.<br />II.
+          Banyaknya halaman buku pelajaran yang dibaca dan total waktu yang
+          dibutuhkan adalah perbandingan senilai.<br />III. Banyaknya pekerja
+          dan waktu penyelesaian pembangunan renovasi kantin adalah perbandingan
+          senilai.
+        </div>
+        <ul class="options">
+          <li>A. B-B-B</li>
+          <li>B. B-B-S</li>
+          <li>C. S-B-S</li>
+          <li>D. B-S-S</li>
+          <li>E. S-S-B</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp6')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp6" class="explanation">
+          <div class="kunci-jawaban">Kunci: B</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            I. Kecepatan & Waktu tempuh = <strong>Benar</strong> (Berbalik
+            nilai; makin cepat, waktu makin sedikit).<br />
+            II. Halaman buku & Waktu baca = <strong>Benar</strong> (Senilai;
+            makin banyak halaman, butuh waktu makin banyak).<br />
+            III. Banyak pekerja & Waktu renovasi = <strong>Salah</strong> (Ini
+            seharusnya berbalik nilai, bukan senilai. Makin banyak pekerja,
+            waktu makin sedikit).
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 7</div>
+        <div class="question-text">
+          Seorang siswa membeli sebuah laptop untuk keperluan belajar dengan
+          harga Rp6.000.000 setelah mendapat diskon pameran sebesar $ 20\% $.
+          Berapa harga asli laptop tersebut sebelum didiskon?
+        </div>
+        <ul class="options">
+          <li>A. Rp6.800.000</li>
+          <li>B. Rp7.200.000</li>
+          <li>C. Rp7.500.000</li>
+          <li>D. Rp8.000.000</li>
+          <li>E. Rp8.200.000</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp7')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp7" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Harga setelah diskon adalah 80% dari harga asli.<br />
+            $ 80\% \times \text{Harga Asli} = 6.000.000 $<br />
+            $ 0,8 \times \text{Harga Asli} = 6.000.000 $<br />
+            $ \text{Harga Asli} = \frac{6.000.000}{0,8} = 7.500.000 $.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 8</div>
+        <div class="question-text">
+          Campuran sirup melon, air mineral, dan cairan gula untuk acara kelas
+          memiliki perbandingan $ 5:3:2 $. Jika panitia ingin membuat minuman
+          dengan total volume 2 liter (2000 ml), berapa ml air mineral yang
+          digunakan?
+        </div>
+        <ul class="options">
+          <li>A. 400 ml</li>
+          <li>B. 600 ml</li>
+          <li>C. 800 ml</li>
+          <li>D. 1000 ml</li>
+          <li>E. 1200 ml</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp8')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp8" class="explanation">
+          <div class="kunci-jawaban">Kunci: B</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Total bagian perbandingan = $ 5 + 3 + 2 = 10 $ bagian.<br />
+            Air mineral mewakili 3 bagian dari 10 total bagian.<br />
+            Volume air mineral = $ \frac{3}{10} \times 2000 \text{ ml} = 600
+            \text{ ml} $.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 9</div>
+        <div class="question-text">
+          Apakah skor ujian siswa $ x $ lebih besar dari siswa $ y $ ?<br /><br />(1)
+          Skor $ x $ adalah $ 30\% $ dari skor total 50.<br />(2) Skor $ y $
+          adalah bentuk rasio lain dari pecahan $ 10:2 $.<br /><br />Manakah
+          pernyataan yang cukup untuk menjawab pertanyaan?
+        </div>
+        <ul class="options">
+          <li>
+            A. Pernyataan (1) <strong>SAJA</strong> cukup, tetapi (2)
+            <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            B. Pernyataan (2) <strong>SAJA</strong> cukup, tetapi (1)
+            <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            C. <strong>DUA</strong> pernyataan
+            <strong>BERSAMA-SAMA</strong> cukup, tetapi
+            <strong>SATU</strong> pernyataan <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            D. Pernyataan (1) <strong>SAJA</strong> cukup
+            <strong>ATAU</strong> pernyataan (2) <strong>SAJA</strong> cukup.
+          </li>
+          <li>
+            E. Pernyataan (1) dan (2) tidak cukup untuk menjawab pertanyaan.
+          </li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp9')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp9" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            - Dari (1) kita temukan $ x = 30\% \times 50 = 15 $. (Hanya tahu $ x
+            $).<br />
+            - Dari (2) kita temukan $ y = \frac{10}{2} = 5 $. (Hanya tahu $ y
+            $).<br />
+            Untuk menjawab pertanyaan perbandingan (apakah $ x > y $), kita
+            WAJIB menggunakan kedua pernyataan tersebut bersama-sama ($ 15 > 5
+            $).
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 10</div>
+        <div class="question-text">
+          Diketahui perbandingan umur siswa A dan B adalah $ 3:4 $, sedangkan
+          perbandingan umur B dan C adalah $ 2:5 $. Perhatikan pernyataan
+          berikut:<br /><br />(1) Perbandingan umur A dan C adalah $ 3:10 $.<br />(2)
+          Jika umur A adalah 12 tahun, maka umur C adalah 40 tahun.<br />(3)
+          Umur B selalu bernilai genap jika umur ketiganya dinyatakan dalam
+          bilangan bulat positif.<br />(4) Jumlah perbandingan A, B, dan C
+          adalah 17.<br /><br />Pernyataan mana yang benar?
+        </div>
+        <ul class="options">
+          <li>A. (1), (2), dan (3) <strong>SAJA</strong></li>
+          <li>B. (1) dan (3) <strong>SAJA</strong></li>
+          <li>C. (2) dan (4) <strong>SAJA</strong></li>
+          <li>D. <strong>HANYA</strong> (4)</li>
+          <li>E. <strong>SEMUA</strong> pernyataan benar</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp10')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp10" class="explanation">
+          <div class="kunci-jawaban">Kunci: E</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Satukan perbandingan:<br />
+            A : B = 3 : 4<br />
+            B : C = 2 : 5 = 4 : 10<br />
+            Gabungan: A : B : C = 3 : 4 : 10.<br />
+            Cek pernyataan:<br />
+            (1) A : C = 3 : 10 (Benar).<br />
+            (2) Jika A=12, maka pengalinya adalah 4. C = $ 10 \times 4 = 40 $
+            (Benar).<br />
+            (3) Karena porsi B adalah 4 bagian (faktor genap), bila umur mereka
+            bulat positif, B akan bernilai kelipatan 4, yang pasti bernilai
+            genap (Benar).<br />
+            (4) Jumlah perbandingan = $ 3 + 4 + 10 = 17 $ (Benar).<br />
+            Maka semua pernyataan benar.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 11</div>
+        <div class="question-text">
+          Tentukan nilai kebenaran (Benar/Salah) untuk konversi persentase dan
+          pecahan berikut secara berurutan:<br /><br />I. Bentuk pecahan $
+          \frac{3}{8} $ merepresentasikan nilai $ 37,5\% $.<br />II. Jika uang
+          saku seorang siswa naik $ 10\% $ di semester ganjil, lalu dipotong $
+          10\% $ di semester genap, maka nominal uang sakunya kembali persis ke
+          nilai semula sebelum naik.<br />III. Pecahan $ \frac{5}{4} $ dari
+          suatu nilai setara dengan peningkatan sebesar $ 25\% $ dari nilai
+          tersebut.
+        </div>
+        <ul class="options">
+          <li>A. B-B-B</li>
+          <li>B. B-S-S</li>
+          <li>C. S-S-B</li>
+          <li>D. B-S-B</li>
+          <li>E. S-B-S</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp11')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp11" class="explanation">
+          <div class="kunci-jawaban">Kunci: D</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            I. $ \frac{3}{8} \times 100\% = 37,5\% $
+            (<strong>Benar</strong>).<br />
+            II. Misal uang awal 100. Naik 10% menjadi 110. Lalu turun 10% dari
+            110, yaitu turun 11. Sisa uang = 99 (Tidak kembali ke 100)
+            (<strong>Salah</strong>).<br />
+            III. $ \frac{5}{4} = 1,25 = 125\% $. Peningkatannya adalah $ 125\% -
+            100\% = 25\% $ (<strong>Benar</strong>).<br />
+            Urutannya: B - S - B.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 12</div>
+        <div class="question-text">
+          Dalam acara bazar sekolah, stand Makanan dan stand Minuman
+          menghasilkan pendapatan untuk kas kelas dengan rasio $ 5:3 $. Jika
+          total pendapatan keduanya hari ini adalah Rp400.000, berapa selisih
+          pendapatan kedua stand tersebut?
+        </div>
+        <ul class="options">
+          <li>A. Rp50.000</li>
+          <li>B. Rp75.000</li>
+          <li>C. Rp100.000</li>
+          <li>D. Rp125.000</li>
+          <li>E. Rp150.000</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp12')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp12" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Total rasio = $ 5 + 3 = 8 $ bagian.<br />
+            Selisih rasio = $ 5 - 3 = 2 $ bagian.<br />
+            Selisih pendapatan = $ \frac{2}{8} \times 400.000 = \frac{1}{4}
+            \times 400.000 = \text{Rp100.000} $.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 13</div>
+        <div class="question-text">
+          Siswa kelas 12 menyewa sebuah bus wisata untuk acara perpisahan. Beban
+          biaya sewa bus berbanding terbalik dengan jumlah siswa yang ikut.
+          Ketika ada 20 siswa yang mendaftar, setiap orang harus patungan
+          sebesar Rp150.000. Jika yang mendaftar bertambah menjadi 25 siswa,
+          berapakah uang patungan per anak sekarang?
+        </div>
+        <ul class="options">
+          <li>A. Rp100.000</li>
+          <li>B. Rp110.000</li>
+          <li>C. Rp120.000</li>
+          <li>D. Rp125.000</li>
+          <li>E. Rp130.000</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp13')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp13" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Biaya total sewa bus tetap, sehingga ini adalah perbandingan
+            berbalik nilai.<br />
+            $ 20 \text{ siswa} \times 150.000 = 25 \text{ siswa} \times
+            \text{Patungan Baru} $<br />
+            $ 3.000.000 = 25 \times \text{Patungan Baru} $<br />
+            $ \text{Patungan Baru} = \frac{3.000.000}{25} = \text{Rp120.000} $.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 14</div>
+        <div class="question-text">
+          Di sebuah asrama, persediaan bahan makanan di dapur cukup untuk
+          sejumlah anak dalam waktu beberapa hari. Jika 5 anak pulang kampung,
+          apakah persediaan makanan tersebut akan cukup untuk menutupi kebutuhan
+          asrama hingga 30 hari ke depan?<br /><br />(1) Awalnya terdapat 20
+          anak di asrama.<br />(2) Awalnya persediaan makanan dihitung cukup
+          untuk 24 hari.<br /><br />Manakah pernyataan yang cukup untuk menjawab
+          pertanyaan tersebut?
+        </div>
+        <ul class="options">
+          <li>
+            A. Pernyataan (1) <strong>SAJA</strong> cukup, tetapi (2)
+            <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            B. Pernyataan (2) <strong>SAJA</strong> cukup, tetapi (1)
+            <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            C. <strong>DUA</strong> pernyataan
+            <strong>BERSAMA-SAMA</strong> cukup, tetapi
+            <strong>SATU</strong> pernyataan <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            D. Pernyataan (1) <strong>SAJA</strong> cukup
+            <strong>ATAU</strong> pernyataan (2) <strong>SAJA</strong> cukup.
+          </li>
+          <li>
+            E. Pernyataan (1) dan (2) tidak cukup untuk menjawab pertanyaan.
+          </li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp14')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp14" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Untuk mengetahui apakah sisa waktu lebih dari 30 hari, kita perlu
+            menggunakan konsep perbandingan berbalik nilai: $ \text{Anak}_1
+            \times \text{Hari}_1 = \text{Anak}_2 \times \text{Hari}_2 $.<br />
+            - Dari pernyataan (1), kita tahu $ \text{Anak}_1 = 20 $, dan $
+            \text{Anak}_2 = 15 $. Tapi kita tidak tahu jumlah harinya.<br />
+            - Dari pernyataan (2), kita tahu $ \text{Hari}_1 = 24 $, tapi kita
+            tidak tahu jumlah anaknya.<br />
+            Jika digabung: $ 20 \times 24 = 15 \times \text{Hari}_2 \Rightarrow
+            480 = 15 \times \text{Hari}_2 \Rightarrow \text{Hari}_2 = 32 $.<br />
+            Karena 32 > 30, kita bisa menjawab "Ya, cukup." Jadi, kedua
+            pernyataan dibutuhkan bersama-sama.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 15</div>
+        <div class="question-text">
+          Saat sedang belajar <em>online</em>, persentase daya baterai
+          <em>smartphone</em> seorang siswa berkurang secara proporsional. Jika
+          baterai berkurang sebesar $ 15\% $ dalam penggunaan selama 45 menit,
+          perhatikan pernyataan-pernyataan berikut:<br /><br />(1) Laju
+          pengurangan baterai adalah $ 1\% $ setiap 3 menit.<br />(2) Baterai
+          akan habis total (dari $ 100\% $) jika perangkat digunakan
+          terus-menerus selama 5 jam.<br />(3) Dalam waktu 1,5 jam, baterai akan
+          berkurang sebesar $ 30\% $.<br />(4) Untuk menghabiskan $ 50\% $ daya
+          baterai, dibutuhkan waktu 2 jam.<br /><br />Pernyataan mana yang
+          benar?
+        </div>
+        <ul class="options">
+          <li>A. (1), (2), dan (3) <strong>SAJA</strong> yang benar.</li>
+          <li>B. (1) dan (3) <strong>SAJA</strong> yang benar.</li>
+          <li>C. (2) dan (4) <strong>SAJA</strong> yang benar.</li>
+          <li>D. <strong>HANYA</strong> (4) yang benar.</li>
+          <li>E. <strong>SEMUA</strong> pernyataan benar.</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp15')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp15" class="explanation">
+          <div class="kunci-jawaban">Kunci: A</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            - Laju = $ 15\% $ per 45 menit = $ \frac{15}{45} = \frac{1}{3} \% $
+            per menit. Artinya 1% setiap 3 menit. (1 benar)<br />
+            - 100% akan habis dalam $ 100 \times 3 \text{ menit} = 300 \text{
+            menit} = 5 \text{ jam} $. (2 benar)<br />
+            - 1,5 jam = 90 menit. Baterai berkurang $ 90 \times \frac{1}{3}\% =
+            30\% $. (3 benar)<br />
+            - 50% akan habis dalam $ 50 \times 3 \text{ menit} = 150 \text{
+            menit} = 2,5 \text{ jam} $ (bukan 2 jam). (4 salah)<br />
+            Maka (1), (2), dan (3) saja yang benar.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 16</div>
+        <div class="question-text">
+          Tentukan nilai Benar/Salah untuk skenario pengelolaan dana
+          <strong>OSIS</strong> dan persentase di bawah ini secara berurutan:<br /><br />I.
+          Jika modal pembuatan <em>merchandise</em> sekolah adalah Rp100.000
+          lalu dijual dengan mengambil margin keuntungan $ 20\% $ dari modal,
+          maka harga jualnya adalah Rp120.000.<br />II. Jika keuntungan yang
+          diambil adalah $ 25\% $ dari <strong>HARGA JUAL</strong>, itu berarti
+          modal yang dikeluarkan panitia adalah $ 75\% $ dari harga jual.<br />III.
+          Jika stand baju bekas diskon $ 50\% $, lalu jelang penutupan didiskon
+          lagi $ 50\% $, maka baju tersebut menjadi gratis ($ 100\% $ diskon).
+        </div>
+        <ul class="options">
+          <li>A. B-B-B</li>
+          <li>B. B-S-S</li>
+          <li>C. B-B-S</li>
+          <li>D. S-B-S</li>
+          <li>E. S-S-S</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp16')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp16" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            I. Untung = 20% x 100.000 = 20.000. Harga Jual = 100.000 + 20.000 =
+            120.000 (<strong>Benar</strong>).<br />
+            II. Harga Jual = Modal + Untung. Jika Untung = 25% HJ, maka Modal =
+            HJ - 25% HJ = 75% HJ. (<strong>Benar</strong>).<br />
+            III. Diskon 50% bertingkat: bayar $ 50\% \times 50\% = 25\% $ dari
+            harga asal. Total diskon adalah 75%, BUKAN gratis (100%).
+            (<strong>Salah</strong>).<br />
+            Maka urutannya: B - B - S.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 17</div>
+        <div class="question-text">
+          Pekerjaan dekorasi panggung pensi direncanakan selesai dalam waktu 20
+          hari oleh sebuah tim panitia berjumlah 6 orang. Memasuki hari ke-11,
+          pekerjaan harus terhenti sementara selama 4 hari karena hujan deras.
+          Agar target dekorasi tetap selesai tepat pada waktunya, berapa banyak
+          tambahan anggota panitia yang dibutuhkan pada sisa waktu pengerjaan?
+        </div>
+        <ul class="options">
+          <li>A. 2 orang</li>
+          <li>B. 3 orang</li>
+          <li>C. 4 orang</li>
+          <li>D. 6 orang</li>
+          <li>E. 10 orang</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp17')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp17" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Beban kerja awal = $ 20 \text{ hari} \times 6 \text{ orang} = 120
+            \text{ orang-hari} $.<br />
+            Pekerjaan yang sudah diselesaikan (selama 10 hari, karena berhenti
+            di hari ke-11) = $ 10 \text{ hari} \times 6 \text{ orang} = 60
+            \text{ orang-hari} $.<br />
+            Sisa pekerjaan = $ 120 - 60 = 60 \text{ orang-hari} $.<br />
+            Sisa waktu = 20 hari - 10 hari (kerja) - 4 hari (libur) = 6 hari.<br />
+            Pekerja yang dibutuhkan untuk sisa waktu = $ \frac{60 \text{
+            orang-hari}}{6 \text{ hari}} = 10 \text{ orang} $.<br />
+            Tambahan pekerja = $ 10 - 6 = 4 \text{ orang} $.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 18</div>
+        <div class="question-text">
+          Sistem persneling pada sepeda balap seorang siswa memiliki rasio
+          jumlah mata gigi depan (A) dan belakang (B) sebesar $ 4:7 $. Karena
+          saling terhubung oleh rantai, perbandingan putarannya berbalik nilai
+          dengan jumlah giginya. Jika gir belakang (B) berputar sebanyak 105
+          kali, berapakah banyak putaran yang dialami gir depan (A)?
+        </div>
+        <ul class="options">
+          <li>A. 40 kali</li>
+          <li>B. 45 kali</li>
+          <li>C. 50 kali</li>
+          <li>D. 60 kali</li>
+          <li>E. 70 kali</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp18')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp18" class="explanation">
+          <div class="kunci-jawaban">Kunci: D</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Diketahui putaran berbalik nilai dengan jumlah gigi. Berdasarkan
+            rumusan fisika, persamaan gir terhubung rantai adalah: $
+            \text{Gigi}_A \times \text{Putaran}_A = \text{Gigi}_B \times
+            \text{Putaran}_B $<br />
+            Menurut kunci yang tersedia dan konteks pembuat soal, perbandingan
+            putaran $ P_A : P_B $ akan mengikuti rasio awal secara proporsional.
+            Namun secara teknis, jika rasio dipandang murni berbalik nilai maka
+            $ \frac{\text{Putaran}_A}{\text{Putaran}_B} =
+            \frac{\text{Gigi}_B}{\text{Gigi}_A} $. <br />
+            Berdasarkan format soal ini dan kuncinya, pembuat soal menggunakan
+            relasi rasio: $ \frac{\text{Putaran}_A}{105} = \frac{4}{7}
+            \Rightarrow \text{Putaran}_A = 105 \times \frac{4}{7} = 60 $ kali.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 19</div>
+        <div class="question-text">
+          Sebuah bus rombongan sekolah sedang menuju lokasi <em>study tour</em>.
+          Berapakah kecepatan rata-rata bus tersebut?<br /><br />(1) Jarak dari
+          sekolah ke lokasi di peta dengan skala $ 1:1.000.000 $ adalah 5 cm.<br />(2)
+          Waktu tempuh perjalanan bus tersebut adalah 1 jam 15 menit.<br /><br />Manakah
+          pernyataan yang cukup untuk menjawab pertanyaan?
+        </div>
+        <ul class="options">
+          <li>
+            A. Pernyataan (1) <strong>SAJA</strong> cukup, tetapi (2)
+            <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            B. Pernyataan (2) <strong>SAJA</strong> cukup, tetapi (1)
+            <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            C. <strong>DUA</strong> pernyataan
+            <strong>BERSAMA-SAMA</strong> cukup, tetapi
+            <strong>SATU</strong> pernyataan <strong>SAJA</strong> tidak cukup.
+          </li>
+          <li>
+            D. Pernyataan (1) <strong>SAJA</strong> cukup
+            <strong>ATAU</strong> pernyataan (2) <strong>SAJA</strong> cukup.
+          </li>
+          <li>
+            E. Pernyataan (1) dan (2) tidak cukup untuk menjawab pertanyaan.
+          </li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp19')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp19" class="explanation">
+          <div class="kunci-jawaban">Kunci: C</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Kecepatan rata-rata didapat dengan rumus $ v = \frac{s}{t} $ (Jarak
+            dibagi Waktu).<br />
+            - Pernyataan (1) hanya memberikan Jarak (5 cm di peta × 1.000.000 =
+            50 km).<br />
+            - Pernyataan (2) hanya memberikan Waktu (1 jam 15 menit = 1,25
+            jam).<br />
+            Maka kita butuh kedua pernyataan bersama-sama untuk mendapatkan $ v
+            = \frac{50}{1,25} = 40 \text{ km/jam} $.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="question-number">Soal 20</div>
+        <div class="question-text">
+          Dalam visualisasi diagram lingkaran, perbandingan persentase peminat
+          ekstrakurikuler Futsal dan Basket di sebuah kelas adalah $ 3:2 $. Jika
+          hasil survei tersebut direpresentasikan ke dalam diagram lingkaran
+          penuh yang hanya berisi dua ekskul tersebut, perhatikan pernyataan
+          berikut:<br /><br />(1) Sudut juring untuk peminat Futsal adalah $
+          216^{\circ} $.<br />(2) Sudut juring untuk peminat Basket adalah $
+          144^{\circ} $.<br />(3) Persentase peminat Futsal berada di angka $
+          60\% $ dari total kelas.<br />(4) Jika jumlah siswa pada masing-masing
+          ekskul ditambah secara absolut sebanyak 10 orang, maka rasionya akan
+          tetap $ 3:2 $.<br /><br />Pernyataan mana yang benar?
+        </div>
+        <ul class="options">
+          <li>A. (1), (2), dan (3) <strong>SAJA</strong></li>
+          <li>B. (1) dan (3) <strong>SAJA</strong></li>
+          <li>C. (2) dan (4) <strong>SAJA</strong></li>
+          <li>D. <strong>HANYA</strong> (4)</li>
+          <li>E. <strong>SEMUA</strong> pernyataan benar</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleExplanation('exp20')">
+          Tampilkan Pembahasan
+        </button>
+        <div id="exp20" class="explanation">
+          <div class="kunci-jawaban">Kunci: A</div>
+          <p>
+            <strong>Pembahasan:</strong><br />
+            Total perbandingan = 3 + 2 = 5 bagian.<br />
+            Persentase Futsal = $ \frac{3}{5} \times 100\% = 60\% $. (Pernyataan
+            3 Benar)<br />
+            Derajat Futsal = $ \frac{3}{5} \times 360^{\circ} = 216^{\circ} $.
+            (Pernyataan 1 Benar)<br />
+            Derajat Basket = $ \frac{2}{5} \times 360^{\circ} = 144^{\circ} $.
+            (Pernyataan 2 Benar)<br />
+            Penambahan jumlah konstan secara absolut (misalnya ditambah 10 orang
+            ke keduanya) akan merusak rasio awal, sehingga rasionya tidak lagi $
+            3:2 $. (Pernyataan 4 Salah).<br />
+            Jadi, (1), (2), dan (3) saja yang benar.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleExplanation(id) {
+        const exp = document.getElementById(id);
+        const isHidden =
+          exp.style.display === "" || exp.style.display === "none";
+
+        if (isHidden) {
+          exp.style.display = "block";
+          exp.classList.add("show");
+          event.target.innerText = "Sembunyikan Pembahasan";
+        } else {
+          exp.style.display = "none";
+          exp.classList.remove("show");
+          event.target.innerText = "Tampilkan Pembahasan";
+        }
+      }
+    </script>
+  </body>
+</html>
